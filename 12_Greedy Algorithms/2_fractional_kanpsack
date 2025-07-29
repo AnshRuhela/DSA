@@ -1,0 +1,46 @@
+// class implemented
+/*
+struct Item{
+    int value;
+    int weight;
+};
+*/
+
+
+class Solution {
+  public:
+ static bool comp(pair<int,int>a,pair<int,int>b)
+  {
+      double a1= a.first/(double)a.second;
+      double b1=b.first/(double)b.second;
+      return a1>b1;
+  }
+    double fractionalKnapsack(vector<int>& val, vector<int>& wt, int capacity) {
+        vector<pair<int,int>>arr;
+        int n=val.size();
+        for(int i=0;i<n;i++)
+        {
+            arr.push_back({val[i],wt[i]});
+        }
+        
+        sort(arr.begin(),arr.end(),comp);
+        
+        int cap=capacity;
+        double ans=0;
+        for(int i=0;i<n && cap>0;i++)
+        {
+            if(arr[i].second<=cap)
+            {
+                ans+=arr[i].first;
+                cap-=arr[i].second;
+            }
+            else
+            {
+                double per=arr[i].first/(double)arr[i].second;
+                ans+=(cap*per);
+                cap=0;
+            }
+        }
+        return ans;
+    }
+};
