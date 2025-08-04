@@ -21,6 +21,7 @@ class Solution {
       }
   }
     int lcs(int n, int m, string str1, string str2) {
+        // we considered 1 based indexing means we are assuming the length of the strings not the indexes.
         vector<vector<int>>dp(n+1,vector<int>(m+1,-1));
         
         
