@@ -16,11 +16,11 @@ public:
         int ans;
         if(st.empty())
         {
-            ans= ind+1;
+            ans= ind+1; // means abhi tak ka sabse bda element aaya hai.
         }
         else
         {
-            ans= ind-st.top().first;
+            ans= ind-st.top().first; 
         }
         st.push({ind,price});
         return ans;

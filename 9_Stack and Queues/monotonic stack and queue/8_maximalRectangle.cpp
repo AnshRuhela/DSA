@@ -9,39 +9,39 @@ public:
         {
             for(int j=0;j<col;j++)
             {
-            if(matrix[i][j]=='1')
-            {
-                heights[j]++;
+                if(matrix[i][j]=='1')
+                {
+                    heights[j]++;
+                }
+                else
+                {
+                    heights[j]=0;
+                }
             }
-            else
+            stack<int>st;
+            int n=heights.size();
+            int nse,pse;
+            int area=0;
+            for(int i=0;i<n;i++)
             {
-                heights[j]=0;
+                while(!st.empty() && heights[st.top()]>heights[i] )
+                {
+                    int elem=st.top();
+                    st.pop();
+                    int nse=i;
+                    int pse=st.empty()?-1:st.top();
+                    area=max(area,heights[elem]*(nse-pse-1));
+                }
+                    st.push(i);
             }
-            }
-             stack<int>st;
-        int n=heights.size();
-        int nse,pse;
-        int area=0;
-        for(int i=0;i<n;i++)
-        {
-            while(!st.empty() && heights[st.top()]>heights[i] )
+            while(!st.empty())
             {
-                int elem=st.top();
+                // these remaining elements don't have nse so their nse will be assumed at n
+                int ind=st.top();
                 st.pop();
-                int nse=i;
-                int pse=st.empty()?-1:st.top();
-                area=max(area,heights[elem]*(nse-pse-1));
+                area=max(area,(heights[ind]*(n- (st.empty()?-1:st.top()) -1)));
             }
-                st.push(i);
-        }
-         while(!st.empty())
-        {
-            // these remaining elements don't have nse so their nse will be assumed at n
-            int ind=st.top();
-            st.pop();
-            area=max(area,(heights[ind]*(n- (st.empty()?-1:st.top()) -1)));
-        }
-        ans=max(ans,area);
+            ans=max(ans,area);
         }
         return ans;
     }

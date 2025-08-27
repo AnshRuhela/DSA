@@ -1,4 +1,4 @@
-// similar to longest common subsequence code bas line 20 me dp[i][j]=0; karna hai and uske code me dp[i][j]=dp[i][j]= max(dp[i-1][j],dp[i][j-1]); karna hai.
+// similar to longest common subsequence code bas line 20 me dp[i][j]=0; karna hai and uske code me dp[i][j] = max(dp[i-1][j],dp[i][j-1]); karna hai.
 class Solution {
   public:
     int longestCommonSubstr(string& s1, string& s2) {
