@@ -65,7 +65,7 @@ Node*root;
     }
 };
 
-/**
+/*
  * Your Trie object will be instantiated and called as such:
  * Trie* obj = new Trie();
  * obj->insert(word);
