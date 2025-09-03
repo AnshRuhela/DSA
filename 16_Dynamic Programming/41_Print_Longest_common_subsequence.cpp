@@ -1,12 +1,11 @@
 class Solution {
   public:
     vector<int> getLIS(vector<int>& arr) {
-        
         int n=arr.size();
         vector<int>dp(n,1);
         vector<int>hash(n);
         int lastIndex=0;
-        int ans=1;
+        int LIS=1;
         for(int i=1;i<n;i++)
         {
             for(int j=0;j<i;j++)
@@ -20,14 +19,14 @@ class Solution {
                     }
                 }
             }
-            if(dp[i]>ans)
+            if(dp[i]>LIS)
             {
-                ans=dp[i];
+                LIS=dp[i];
                 lastIndex=i; // we tracked the last index updated which is the maximum bcs. last wali maximum index se hi hume backtrack start karna hai.
             }
         }
-        vector<int>res(ans);
-        int i=ans-1;
+        vector<int>res(LIS);
+        int i=LIS-1;
         res[i]=arr[lastIndex]; // pehla element daal diya kuki baaki saare loop me aa jaynge.
         i--;
         while(i>=0) // jabtak saari index fill nahi ho jaati.
