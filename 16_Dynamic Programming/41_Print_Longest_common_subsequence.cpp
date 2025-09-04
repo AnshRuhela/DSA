@@ -27,13 +27,11 @@ class Solution {
         }
         vector<int>res(LIS);
         int i=LIS-1;
-        res[i]=arr[lastIndex]; // pehla element daal diya kuki baaki saare loop me aa jaynge.
-        i--;
         while(i>=0) // jabtak saari index fill nahi ho jaati.
         {
-            res[i]=arr[hash[lastIndex]];
-            i--;
+            res[i]=arr[lastIndex];
             lastIndex=hash[lastIndex];
+            i--;
         }
         return res;
     }
