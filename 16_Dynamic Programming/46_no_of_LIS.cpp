@@ -1,44 +1,49 @@
-class Solution
-{
+/*
+Given an integer array nums, return the number of longest increasing subsequences.
+
+Notice that the sequence has to be strictly increasing.
+
+Example 1:
+
+Input: nums = [1,3,5,4,7]
+Output: 2
+Explanation: The two longest increasing subsequences are [1, 3, 4, 7] and [1, 3, 5, 7].
+Example 2:
+
+Input: nums = [2,2,2,2,2]
+Output: 5
+Explanation: The length of the longest increasing subsequence is 1, and there are 5 increasing subsequences of length 1, so output 5.
+
+*/
+
+class Solution {
 public:
-    int findNumberOfLIS(vector<int> &nums)
-    {
+    int findNumberOfLIS(vector<int>& nums) {
         int n = nums.size();
+        vector<int> dp(n,1) , cnt(n,1);
 
-        vector<int> dp(n, 1); // dp[i] stores the length of the LIS ending at nums[i]
-        vector<int> ct(n, 1); // ct[i] stores the count of LIS ending at nums[i]
-
-        int maxi = 1; // Initialize the maximum length as 1
-
-        for (int i = 0; i < n; i++)
-        {
-            for (int prev_index = 0; prev_index < i; prev_index++)
-            {
-                if (nums[prev_index] < nums[i] && dp[prev_index] + 1 > dp[i])
-                {
-                    dp[i] = dp[prev_index] + 1;
-                    // Inherit count
-                    ct[i] = ct[prev_index]; //means iske through kitne bane honge. // dry run this yourself.
-                }
-                else if (nums[prev_index] < nums[i] && dp[prev_index] + 1 == dp[i])
-                {
-                    // Increase the count
-                    ct[i] = ct[i] + ct[prev_index]; // agar dubara equal aaya means count increase karna hai.
+        int maxi = 0;
+        for(int i = 0; i<n; i++){
+            for(int j = 0; j<i; j++){
+                if(nums[j] < nums[i]){
+                    if(dp[i] < 1 + dp[j]){
+                        dp[i] = 1 + dp[j];
+                        cnt[i] = cnt[j];
+                    }
+                    else if(dp[i] == 1 + dp[j]){
+                        cnt[i] += cnt[j];
+                    }
                 }
             }
-            maxi = max(maxi, dp[i]);
-        }
-
-        int numberOfLIS = 0;
-
-        for (int i = 0; i < n; i++)
-        {
-            if (dp[i] == maxi)
-            {
-                numberOfLIS += ct[i];
+            maxi = max(maxi , dp[i]);
+        }        
+        
+        int ans = 0;
+        for(int i = 0; i<n; i++){
+            if(maxi == dp[i]){
+                ans += cnt[i];
             }
         }
-
-        return numberOfLIS;
+        return ans;
     }
 };

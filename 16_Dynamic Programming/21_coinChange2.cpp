@@ -3,7 +3,7 @@ public:
 
     int find(int amount,vector<int>coins,int ind,vector<vector<int>>&dp)
     {
-        if(ind==0)
+        if(ind==0) 
         {
             if(amount%coins[0]==0)
             {

@@ -1,63 +1,51 @@
+/*
+You are given an array prices where prices[i] is the price of a given stock on the ith day.
+
+Find the maximum profit you can achieve. You may complete at most two transactions.
+
+Note: You may not engage in multiple transactions simultaneously (i.e., you must sell the stock before you buy again).
+
+Example 1:
+
+Input: prices = [3,3,5,0,0,3,1,4]
+Output: 6
+Explanation: Buy on day 4 (price = 0) and sell on day 6 (price = 3), profit = 3-0 = 3.
+Then buy on day 7 (price = 1) and sell on day 8 (price = 4), profit = 4-1 = 3.
+Example 2:
+
+Input: prices = [1,2,3,4,5]
+Output: 4
+Explanation: Buy on day 1 (price = 1) and sell on day 5 (price = 5), profit = 5-1 = 4.
+Note that you cannot buy on day 1, buy on day 2 and sell them later, as you are engaging multiple transactions at the same time. You must sell before buying again.
+Example 3:
+
+Input: prices = [7,6,4,3,1]
+Output: 0
+Explanation: In this case, no transaction is done, i.e. max profit = 0.
+*/
 class Solution {
 public:
-    int find(vector<int>&prices,int n,bool buy,int trans,int ind,vector<vector<vector<int>>>&dp)
-    {
-        if(trans==0) // this new thing added.
-        {
-            return 0;
-        }
-        if(ind==n)
-        {
-            return 0;
-        }
-        if(dp[ind][trans][buy]!=-1) return dp[ind][trans][buy];
-        int ans=0;
-        if(buy)
-        {
-            int take=-prices[ind]+find(prices,n,!buy,trans,ind+1,dp); // we didn't do trans-1 bcs abhi buy kar raha hai transaction poori nahi hui
-            int ntake=find(prices,n,buy,trans,ind+1,dp);
-            ans=max(ntake,take);    
-        }
-        else
-        {
-            int sell = prices[ind]+find(prices,n,!buy,trans-1,ind+1,dp); // trans-1 kiya kuki transaction poori hogyi hai.
-            int notSell = find(prices,n,buy,trans,ind+1,dp);
-            ans=max(sell,notSell);
-        }
+    int find(vector<int> &prices , int n , int ind , int buy , int cap , vector<vector<vector<int>>> &dp){
 
-        return dp[ind][trans][buy]=ans;
+        if(cap == 0 )return 0;
+        if(ind == n) return 0;
 
+        if(dp[ind][buy][cap] != -1) return dp[ind][buy][cap];
+
+        int ntake = find(prices,n,ind+1,buy,cap,dp);
+
+        int take = -1e8;
+        if(buy){
+                take = -prices[ind] + find(prices,n,ind+1,!buy , cap , dp);
+        }
+        else{
+            take = prices[ind] + find(prices,n , ind+1,!buy,cap -1 ,dp);
+        }
+        return dp[ind][buy][cap] = max(ntake,take);
     }
     int maxProfit(vector<int>& prices) {
-        int n=prices.size();
-        // vector<vector<vector<int>>>dp(n,vector<vector<int>>(3,vector<int>(2,-1)));
-        // return find(prices,n,true,2,0,dp);
-vector<vector<vector<int>>>dp(n+1,vector<vector<int>>(3,vector<int>(2,0)));
-        for(int ind=n-1;ind>=0;ind--)
-        {
-            for(int trans=1;trans<=2;trans++)
-            {
-                for(int buy=1;buy>=0;buy--)
-                {  
-                     int ans=0;
-                      if(buy)
-                    {
-                        int take=-prices[ind]+dp[ind+1][trans][!buy];
-                        int ntake=dp[ind+1][trans][buy];
-                        ans=max(ntake,take);
-                    }
-                    else
-                    {
-                        int bechdo = prices[ind]+dp[ind+1][trans-1][!buy];
-                        int nahi = dp[ind+1][trans][buy];
-                        ans=max(bechdo,max(nahi,ans));
-                    }
-
-                    dp[ind][trans][buy]=ans;
-                }
-            }
-        }
-
-        return dp[0][2][1];
+        int n = prices.size();
+        vector<vector<vector<int>>> dp(n,vector<vector<int>>(2,vector<int>(3,-1)));
+        return find(prices,n,0,1,2,dp);
     }
 };

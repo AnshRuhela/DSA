@@ -8,17 +8,17 @@ public:
         }
         if(dp[row][col]!=-1) return dp[row][col];
         int ans1=1e8,ans2=1e8,ans3=1e8;
-        if(row<n)
+        if(row<n)// seedha niche jana hai.
         {
             ans1=matrix[row][col]+find(matrix,row+1,col,n,dp);
         }
         
-        if(row<n && col<n-1)
+        if(row<n && col<n-1) // neeche right me jaana hai
         {
             ans2=matrix[row][col]+find(matrix,row+1,col+1,n,dp);
         }
         
-        if(row<n && col>0)
+        if(row<n && col>0) // neeche left me jaana hai.
         {
             ans3=matrix[row][col]+find(matrix,row+1,col-1,n,dp);
         }
@@ -32,7 +32,7 @@ public:
         // {
         //     ans=min(ans,find(matrix,0,i,n,dp));
         // }
-
+        // return ans;
         vector<vector<int>>dp(n+1,vector<int>(n,0)); // made n+1 for tabulation so that base case bhi handle ho jaye.
 
         

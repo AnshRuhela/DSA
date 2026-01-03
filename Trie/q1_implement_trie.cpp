@@ -1,3 +1,7 @@
+#include<iostream>
+
+using namespace std;
+
 struct Node
 {
     Node *links[26];

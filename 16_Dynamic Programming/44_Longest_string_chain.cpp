@@ -1,6 +1,5 @@
 class Solution {
 public:
-
     bool compare(string &s1,string &s2)
     {
         int n1=s1.length();
@@ -10,7 +9,7 @@ public:
         int i=0,j=0;
         while(j<n2)
         {
-            if(s1[i]==s2[j])
+            if (i < n1 && s1[i] == s2[j])
             {
                 i++;
                 j++;
